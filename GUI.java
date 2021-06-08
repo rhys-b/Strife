@@ -12,6 +12,8 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 
@@ -49,13 +51,27 @@ public class GUI {
 		JMenuBar menuBar = new JMenuBar();
 		window.setJMenuBar(menuBar);
 		
-		JMenu help = new JMenu("Help");
-		menuBar.add(help);
+		JMenu menu = new JMenu("Menu");
+		menuBar.add(menu);
 		
-		JMenuItem helpItem = new JMenuItem("Help");
-		helpItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
-		help.add(helpItem);
-		
-		helpItem.addActionListener(new Help(window));
+		JMenuItem help = new JMenuItem("Help");
+		help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H,
+			InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
+		menu.add(help);
+
+		JMenuItem changelog = new JMenuItem("What's new?");
+		menu.add(changelog);
+
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				HtmlFrame.show("data/help.html", window);
+			}
+		});
+
+		changelog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				HtmlFrame.show("data/changelog.html", window);
+			}
+		});
 	}
 }

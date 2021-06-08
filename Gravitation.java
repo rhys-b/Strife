@@ -28,6 +28,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JCheckBoxMenuItem;
 
 import javax.swing.border.TitledBorder;
 
@@ -252,13 +255,13 @@ class Mass {
 		
 		panel = new JPanel();
 		
-		x = new MySpinner(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+		x = new MySpinner(0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
 		x.setBorder(new TitledBorder("X Position"));
 		
-		y = new MySpinner(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+		y = new MySpinner(0, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, 1);
 		y.setBorder(new TitledBorder("Y Position"));
 		
-		mass = new MySpinner(10, 0, Integer.MAX_VALUE, 1);
+		mass = new MySpinner(10, 0, Double.POSITIVE_INFINITY, 1);
 		mass.setBorder(new TitledBorder("Mass"));
 		
 		JButton visible = new JButton(visibleIcon);
@@ -344,6 +347,21 @@ class Mass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		JMenuBar menuBar = new JMenuBar();
+		vectorFrame.setJMenuBar(menuBar);
+
+		JMenu menu = new JMenu("Menu");
+		menuBar.add(menu);
+
+		JCheckBoxMenuItem onTop = new JCheckBoxMenuItem("Always visible");
+		menu.add(onTop);
+
+		onTop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				vectorFrame.setAlwaysOnTop(onTop.isSelected());
+			}
+		});
 		
 		JPanel resultantPanel = new JPanel();
 		resultantPanel.setLayout(new GridLayout(1, 2));

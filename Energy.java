@@ -100,16 +100,16 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 			
 			public void startPlatform() {
 				gg.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
-				gg.drawLine(60, 30, 60, 15);
+				gg.drawLine(60, 50, 60, 35);
 				
 				gg.setColor(Color.GREEN);
-				gg.fillRect(58, 5, 15, 10);
+				gg.fillRect(58, 25, 15, 10);
 				
 				if (mouseOnStart) {
 					gg.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
 					gg.setColor(new Color(255, 220, 5));
-					gg.drawOval(95, 55, 10, 10);
-					gg.drawOval(90, 50, 20, 20);
+					gg.drawOval(95, 75, 10, 10);
+					gg.drawOval(90, 70, 20, 20);
 				}
 			}
 			
@@ -136,7 +136,7 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 	
 	public void mouseMoved(MouseEvent me) {
 		if (!running) {
-			if (new Point(100, 60).distance(me.getX(), me.getY()) <= 10) {
+			if (new Point(100, 80).distance(me.getX(), me.getY()) <= 10) {
 				mouseOnStart = true;
 				graphicsComponent.repaint();
 			} else if (mouseOnStart) {
@@ -199,6 +199,8 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 		
 		frictionSpinner = new MySpinner(0, 0, 2, 0.01);
 		frictionSpinner.setBounds(100, 140, 95, 25);
+		((MySpinner.NumberEditor) frictionSpinner.getEditor()).getFormat()
+			.setMaximumFractionDigits(3);
 		sidePanel.add(frictionSpinner);
 		
 		JLabel note = new JLabel("Assume 1kg mass");
@@ -211,7 +213,7 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 		speedLabel2.setBounds(5, 210, 75, 25);
 		sidePanel.add(speedLabel2);
 		
-		speedLabel = new JLabel("0m/s");
+		speedLabel = new JLabel("0.000m/s");
 		speedLabel.setBounds(90, 210, 105, 25);
 		speedLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		sidePanel.add(speedLabel);
@@ -221,7 +223,7 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 		sidePanel.add(potentialLabel2);
 		
 		calculateStartingPotential();
-		potentialLabel = new JLabel("0J");
+		potentialLabel = new JLabel("0.000J");
 		potentialLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		potentialLabel.setBounds(90, 240, 105, 25);
 		sidePanel.add(potentialLabel);
@@ -230,7 +232,7 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 		kineticLabel2.setBounds(5, 275, 75, 25);
 		sidePanel.add(kineticLabel2);
 		
-		kineticLabel = new JLabel("0J");
+		kineticLabel = new JLabel("0.000J");
 		kineticLabel.setBounds(90, 275, 105, 25);
 		kineticLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		sidePanel.add(kineticLabel);
@@ -275,12 +277,12 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 		});
 	}
 	
-	public double roundTenth(double d) {
-		return Math.round(d * 10.0) / 10.0;
+	public String roundTenth(double d) {
+		return String.format("%.1f", d);
 	}
 	
-	public double roundThousanth(double d) {
-		return Math.round(d * 1000.0) / 1000.0;
+	public String roundThousanth(double d) {
+		return String.format("%.3f", d);
 	}
 	
 	public void simulate() {
@@ -297,10 +299,10 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 				next[1] = 1;
 				
 				dblX2 = x2 = 68;
-				dblY2 = y2 = 36;
+				dblY2 = y2 = 56;
 				
 				dblX1 = x1 = 100;
-				dblY1 = y1 = 60;
+				dblY1 = y1 = 80;
 				
 				while (running) {
 					if (!paused) {
@@ -433,8 +435,8 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 	
 	public void resetList() {
 		list = new ArrayList<Point>();
-		list.add(new Point(60, 30));
-		list.add(new Point(100, 60));
+		list.add(new Point(60, 50));
+		list.add(new Point(100, 80));
 	}
 	
 	public void setRunning(boolean b) {
@@ -491,9 +493,9 @@ public class Energy extends JPanel implements MouseMotionListener, MouseListener
 	}
 	
 	public void resetLabels() {
-		speedLabel.setText("0m/s");
-		kineticLabel.setText("0J");
-		potentialLabel.setText("0J");
+		speedLabel.setText("0.000m/s");
+		kineticLabel.setText("0.000J");
+		potentialLabel.setText("0.000J");
 	}
 	
 	
